@@ -19,14 +19,28 @@
 
     var minSize = Math.min(imgHeight, imgWidth);
     resizeSize.value = minSize;
+    resizeSize.max = minSize;
 
     resizeX.min = 0;
     resizeY.min = 0;
 
     resizeX.max = imgWidth;
     resizeY.max = imgHeight;
+    
+    formValidate = function(input){
+      if(resizeSize.value > minSize ){
+        resizeSize.value =  minSize;
+      }
+      resizeX.max = parseInt(imgWidth - resizeSize.value);
+      if(resizeX.value > resizeX.max){
+        resizeX.value = resizeX.max;
+      }
+      resizeY.max = parseInt(imgHeight - resizeSize.value);
+      if(resizeY.value > resizeY.max){
+        resizeY.value = resizeY.max;
+      }
+    }
   }
-
   
   // Ограничение на ввод отрицательных значений
   
@@ -47,6 +61,8 @@
       resizeSize.value = 0;
     }
   };
+  
+  
   prevButton.onclick = function(evt) {
     evt.preventDefault();
 
