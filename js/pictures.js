@@ -1,7 +1,7 @@
 (function() {
   var filterContainer = document.querySelector('.filters');
   filterContainer.classList.add('hidden');
-  
+
   var picturesContainer = document.querySelector('.pictures');
   var pictureTemplate = document.getElementById('picture-template');
 
@@ -13,7 +13,7 @@
 
     var pictureItem = new Image();
     pictureItem.src  = picture['url'];
-    
+
     pictureItem.onload = function() {
       pictureItem.setAttribute('width', 182);
       pictureItem.setAttribute('height', 182);
@@ -27,5 +27,5 @@
     picturesContainer.appendChild(newPictureElement);
   });
 
-  filtersBlock.classList.remove('hidden');
+  filterContainer.classList.remove('hidden');
 })();
