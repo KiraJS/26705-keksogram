@@ -10,58 +10,69 @@
   var resizeY = resizeForm['resize-y']; // Поле ввода значения сдвига по y
   var resizeSize = resizeForm['resize-size']; // Поле ввода значения размера изображения
 
+  var titleForX = document.getElementById("upload-resize-title-X");
+  var titleForY = document.getElementById("upload-resize-title-Y");
+  var titleForS = document.getElementById("upload-resize-title-S");
   
-  // Валидация размера и смещения загружаемого изображения
-
   previewImage.onload = function(){
     var imgHeight = previewImage.height;
     var imgWidth = previewImage.width;
-
     var minSize = Math.min(imgHeight, imgWidth);
+    
     resizeSize.value = minSize;
     resizeSize.max = minSize;
+    resizeSize.min = 0;
 
-    resizeX.min = 0;
-    resizeY.min = 0;
+    resizeX.min = resizeX.value = 0;
+    resizeY.min = resizeY.value = 0;
 
-    resizeX.max = imgWidth;
-    resizeY.max = imgHeight;
-    
+    var resizeXMax = parseInt(imgWidth - resizeSize.value);
+    var resizeYMax = parseInt(imgHeight - resizeSize.value);
+    var resizeSizeMax = minSize;
+
     formValidate = function(input){
-      if(resizeSize.value > minSize ){
-        resizeSize.value =  minSize;
+      if (input == "x"){
+        if (resizeX.value < 0){
+          titleForX.style.display = "inline-block";
+          titleForX.innerHTML = "Значение должно быть больше или равно 0"
+        }
+        else if(resizeX.value > resizeXMax){
+          titleForX.style.display = "inline-block";
+          titleForX.innerHTML = "Значение не может превышать " + resizeXMax;
+        }
+        else{
+          titleForX.style.display = "none";
+        }
       }
-      resizeX.max = parseInt(imgWidth - resizeSize.value);
-      if(resizeX.value > resizeX.max){
-        resizeX.value = resizeX.max;
+      else if (input == "y"){
+        if (resizeY.value < 0){
+          titleForY.style.display = "inline-block";
+          titleForY.innerHTML = "Значение должно быть больше или равно 0"
+        }
+        else if(resizeY.value > resizeYMax){
+          titleForY.style.display = "inline-block";
+          titleForY.innerHTML = "Значение не может превышать " + resizeYMax;
+        }
+        else{
+          titleForY.style.display = "none";
+        }
       }
-      resizeY.max = parseInt(imgHeight - resizeSize.value);
-      if(resizeY.value > resizeY.max){
-        resizeY.value = resizeY.max;
+      else {
+        if (resizeSize.value < 0){
+          titleForS.style.display = "inline-block";
+          titleForS.innerHTML = "Значение должно быть больше или равно 0"
+        }
+        else if(resizeSize.value > resizeSize.max){
+          titleForS.style.display = "inline-block";
+          titleForS.innerHTML = "Значение не может превышать " + resizeSizeMax;
+        }
+        else{
+          titleForS.style.display = "none";
+        }
       }
     }
-  }
-  
-  // Ограничение на ввод отрицательных значений
-  
-  resizeX.onchange = function(evt) {
-    if (resizeX.value < 0) {
-      resizeX.value = 0;
-    }
-  };
 
-  resizeY.onchange = function(evt) {
-    if (resizeY.value < 0) {
-      resizeY.value = 0;
-    }
   };
-
-  resizeSize.onchange = function(evt) {
-    if (resizeSize.value < 0) {
-      resizeSize.value = 0;
-    }
-  };
-  
   
   prevButton.onclick = function(evt) {
     evt.preventDefault();
@@ -72,7 +83,7 @@
     uploadForm.classList.remove('invisible');
   };
 
-  resizeForm.onsubmit = function(evt) {
+    resizeForm.onsubmit = function(evt) {
     evt.preventDefault();
     filterForm.elements['filter-image-src'] = previewImage.src;
 

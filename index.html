@@ -32,9 +32,9 @@
     <input type="text" class="invisible" name="resize-image-src" id="resize-image-src" />
 
     <fieldset class="upload-resize-controls">
-      <label for="resize-x">Слева</label><input type="number" id="resize-x" name="x" oninput="formValidate('x')">
-      <label for="resize-y">Сверху</label><input type="number" id="resize-y" name="y" oninput="formValidate('y')">
-      <label for="resize-size">Сторона</label><input type="number" id="resize-size" name="size" oninput="formValidate('s')">
+      <label for="resize-x"><span class="upload-resize-title" id="upload-resize-title-X"></span>Слева</label><input type="number" id="resize-x" name="x" oninput="formValidate('x')">
+      <label for="resize-y">Сверху<span class="upload-resize-title" id="upload-resize-title-Y"></span></label><input type="number" id="resize-y" name="y" oninput="formValidate('y')">
+      <label for="resize-size">Сторона<span class="upload-resize-title" id="upload-resize-title-S"></span></label><input type="number" id="resize-size" name="size" oninput="formValidate('s')">
     </fieldset>
 
     <fieldset class="upload-form-controls">
@@ -72,7 +72,7 @@
     </span>
   </a>
 </template>
-
+<script src="js/cookies.js" charset="utf-8"></script>
 <script src="js/logo-background.js" charset="utf-8"></script>
 <script src="js/resize-form.js" charset="utf-8"></script>
 <script src="js/upload-form.js" charset="utf-8"></script>
