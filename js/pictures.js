@@ -20,7 +20,7 @@
   }
 
   function renderPictures(pictures){
-    pictures.forEach(function(picture, i) {
+    pictures.forEach(function(picture) {
       var newPictureElement = pictureTemplate.content.children[0].cloneNode(true);
       newPictureElement.querySelector(".picture-comments").textContent = picture['comments'];
       newPictureElement.querySelector(".picture-likes").textContent = picture['likes'];
@@ -85,6 +85,8 @@
       showLoadFailure();
     };
   }
+
+
   function filterPictures(pictures, filterID) {
     var filteredPictures = pictures.slice(0);
     switch (filterID) {
@@ -125,7 +127,7 @@
   }
 
   function setActiveFilter(filterID) {
-    var filteredPictures = filterPictures(picturesData, filterID);
+    var filteredPictures = filterPictures(pictures, filterID);
     renderPictures(filteredPictures);
   }
 
@@ -147,7 +149,7 @@
 
   initFilters();
   loadPictures(function(loadedPictures) {
-    picturesData = loadedPictures;
+    pictures = loadedPictures;
     setActiveFilter('filter-popular');
   });
 
