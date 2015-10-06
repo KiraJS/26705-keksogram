@@ -20,6 +20,8 @@
   }
 
   function renderPictures(pictures){
+    picturesContainer.innerHTML = '';
+
     pictures.forEach(function(picture) {
       var newPictureElement = pictureTemplate.content.children[0].cloneNode(true);
       newPictureElement.querySelector(".picture-comments").textContent = picture['comments'];
@@ -106,14 +108,14 @@
         break;
 
       case 'filter-discussed':
-        filteredPictures = filteredPictures.sort(function(c, d) {
-          if (c.comments > d.comments || (d.comments && c.comments === 0)) {
+        filteredPictures = filteredPictures.sort(function(a, b) {
+          if (a.comments > b.comments || (b.comments && a.comments === 0)) {
             return -1;
           }
-          if (c.comments < d.comments || (c.comments && d.comments === 0)) {
+          if (a.comments < b.comments || (a.comments && b.comments === 0)) {
             return 1;
           }
-          if (c.comments === d.comments) {
+          if (a.comments === b.comments) {
             return 0;
           }
         });
@@ -152,5 +154,4 @@
     pictures = loadedPictures;
     setActiveFilter('filter-popular');
   });
-
 })();
