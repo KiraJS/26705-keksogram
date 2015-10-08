@@ -1,4 +1,6 @@
+
 (function() {
+
   var ReadyState = {
     'UNSENT': 0,
     'OPENED': 1,
@@ -14,15 +16,29 @@
   var pictureTemplate = document.getElementById('picture-template');
 
   var pictures;
+  var PAGE_SIZE = 12; // Константа хранит размер страницы
+  var currentPage; // Хранит значение текущей страницы
+  var currentPictures; // Хранит текущее состояние массива
 
   function showLoadFailure (){
     picturesContainer.classList.add("pictures-failure")
   }
 
-  function renderPictures(pictures){
-    picturesContainer.innerHTML = '';
+  // Добавила еще один аргумент и условия для того, чтобы при скроле потом контейнер не отрисовывался заново, а добавлялся
+  function renderPictures(picturesToRender , pageNumber, replace){
+    replace = typeof replace !== 'undefined' ? replace : true;
+    pageNumber = pageNumber || 0; //Нормализация аргумента на случай если он не передан
+     if(replace){
+       picturesContainer.innerHTML = '';
+       picturesContainer.classList.remove("pictures-failure");
+     }
 
-    pictures.forEach(function(picture) {
+    //Постраничное отображение
+    var picturesFrom = pageNumber * PAGE_SIZE;
+    var picturesTo = picturesFrom + PAGE_SIZE;
+    picturesToRender = picturesToRender.slice(picturesFrom, picturesTo);
+
+    picturesToRender.forEach(function(picture) {
       var newPictureElement = pictureTemplate.content.children[0].cloneNode(true);
       newPictureElement.querySelector(".picture-comments").textContent = picture['comments'];
       newPictureElement.querySelector(".picture-likes").textContent = picture['likes'];
@@ -31,15 +47,15 @@
       var pictureItem = new Image();
       pictureItem.src  = picture['url'];
 
-      pictureItem.onload = function() {
+      pictureItem.addEventListener("load", function() {
         pictureItem.setAttribute('width', 182);
         pictureItem.setAttribute('height', 182);
         newPictureElement.replaceChild(pictureItem, pictureElement[0]);
-      }
+      });
 
-      pictureItem.onerror = function() {
+      pictureItem.addEventListener("error", function() {
         newPictureElement.classList.add('picture-load-failure');
-      }
+      });
 
       picturesContainer.appendChild(newPictureElement);
     });
@@ -88,7 +104,6 @@
     };
   }
 
-
   function filterPictures(pictures, filterID) {
     var filteredPictures = pictures.slice(0);
     switch (filterID) {
@@ -125,33 +140,63 @@
         filteredPictures = pictures.slice(0);
         break;
     }
+    localStorage.setItem('filterID', filterID)
     return filteredPictures;
   }
 
+
   function setActiveFilter(filterID) {
-    var filteredPictures = filterPictures(pictures, filterID);
-    renderPictures(filteredPictures);
+    currentPictures = filterPictures(pictures, filterID);
+    currentPage = 0;
+    renderPictures(currentPictures, currentPage, true);
   }
 
-  function initFilters() {
-    var filterElements = document.querySelectorAll('.filters-radio');
-    var filterChecked = document.querySelector('.filters-radio:checked');
 
-    for (var i = 0, l = filterElements.length; i < l; i++) {
-      filterElements[i].onclick = function(evt) {
-        var clickedFilter = evt.currentTarget;
-        if (filterChecked !== clickedFilter) {
-          setActiveFilter(clickedFilter.id);
-          filterChecked = clickedFilter;
-        }
-        clickedFilter.checked = true;
-      };
+  function isNextPageAvailable (){
+    return currentPage < Math.ceil(pictures.length / PAGE_SIZE);
+  };
+
+  function isAtTheBottom (){
+    var GAP = 100;
+    return picturesContainer.getBoundingClientRect().bottom - GAP <= window.innerHeight;
+  };
+
+  // Скролл. Проверка находимся ли мы внизу страницы и можно ли отрисовать следующую
+  function checkNextPage(){
+    if (isAtTheBottom() && isNextPageAvailable ()){
+      //Создание кастомного события - достижение низа страницы
+      window.dispatchEvent(new CustomEvent ('loadneeded'));
     }
   }
+  // Скролл. Запуск функции с таймаутом в 1 сек
+  function initScroll(){
+    var someTimeout;
+    window.addEventListener('scroll', function(){
+      clearTimeout(someTimeout);
+      someTimeout = setTimeout(checkNextPage, 100);
+    });
+    // Вызов кастомного события - достижение низа страницы
+    window.addEventListener('loadneeded', function(){
+      renderPictures(currentPictures, currentPage++, false)
+    })
+  };
+  // Поменяла тип обработки события
+  function initFilters() {
+    var filterContainer = document.querySelector('.filters');
+    filterContainer.addEventListener('click', function(evt){
+      var clickedFilter = evt.target;
+      setActiveFilter(clickedFilter.id)
+    })
+  }
 
+  initScroll();
   initFilters();
+
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;
-    setActiveFilter('filter-popular');
+    //Записала в LS, получила из LS, исправила баг с подсветкой фильтра
+    setActiveFilter(localStorage.getItem('filterID') || 'filter-popular');
+    var checkedFilter = document.getElementById(localStorage.getItem('filterID'));
+    checkedFilter.checked = true;
   });
 })();
