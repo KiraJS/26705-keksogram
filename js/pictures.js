@@ -1,4 +1,3 @@
-
 (function() {
 
   var ReadyState = {
@@ -20,49 +19,34 @@
   var currentPage; // Хранит значение текущей страницы
   var currentPictures; // Хранит текущее состояние массива
 
+  var pictureFragment = document.createDocumentFragment();
+
+
   function showLoadFailure (){
     picturesContainer.classList.add("pictures-failure")
   }
-
-  // Добавила еще один аргумент и условия для того, чтобы при скроле потом контейнер не отрисовывался заново, а добавлялся
+  //Отрисовка изображений с помощью объекта Photo
   function renderPictures(picturesToRender , pageNumber, replace){
+    // Добавила еще один аргумент и условия для того, чтобы при скроле потом контейнер не отрисовывался заново, а добавлялся
     replace = typeof replace !== 'undefined' ? replace : true;
     pageNumber = pageNumber || 0; //Нормализация аргумента на случай если он не передан
-     if(replace){
-       picturesContainer.innerHTML = '';
-       picturesContainer.classList.remove("pictures-failure");
-     }
 
+    if(replace){
+      picturesContainer.innerHTML = '';
+      picturesContainer.classList.remove("pictures-failure");
+    }
     //Постраничное отображение
     var picturesFrom = pageNumber * PAGE_SIZE;
     var picturesTo = picturesFrom + PAGE_SIZE;
     picturesToRender = picturesToRender.slice(picturesFrom, picturesTo);
 
-    picturesToRender.forEach(function(picture) {
-      var newPictureElement = pictureTemplate.content.children[0].cloneNode(true);
-      newPictureElement.querySelector(".picture-comments").textContent = picture['comments'];
-      newPictureElement.querySelector(".picture-likes").textContent = picture['likes'];
-      var pictureElement = newPictureElement.getElementsByTagName('img');
-
-      var pictureItem = new Image();
-      pictureItem.src  = picture['url'];
-
-      pictureItem.addEventListener("load", function() {
-        pictureItem.setAttribute('width', 182);
-        pictureItem.setAttribute('height', 182);
-        newPictureElement.replaceChild(pictureItem, pictureElement[0]);
-      });
-
-      pictureItem.addEventListener("error", function() {
-        newPictureElement.classList.add('picture-load-failure');
-      });
-
-      picturesContainer.appendChild(newPictureElement);
+    picturesToRender.forEach(function(pictureData) {
+      var newPictureElement = new Photo(pictureData)
+      newPictureElement.render(pictureFragment)
     });
-
-  }
-
-  filterContainer.classList.remove('hidden');
+    picturesContainer.appendChild(pictureFragment);
+    filterContainer.classList.remove('hidden');
+  };
 
   function showLoadFailure() {
     picturesContainer.classList.add('pictures-failure');
@@ -199,4 +183,5 @@
     var checkedFilter = document.getElementById(localStorage.getItem('filterID'));
     checkedFilter.checked = true;
   });
+
 })();
