@@ -12,6 +12,7 @@
   filterContainer.classList.add('hidden');
 
   var picturesContainer = document.querySelector('.pictures');
+  var gallery = new Gallery();
   var pictureTemplate = document.getElementById('picture-template');
 
   var pictures;
@@ -164,6 +165,14 @@
       renderPictures(currentPictures, currentPage++, false)
     })
   };
+
+  function initGallery(){
+    window.addEventListener('showgallery', function(evt){
+      gallery.setPhotos(evt.detail.photoElement.getPhotos());
+      gallery.show();
+    })
+  }
+
   // Поменяла тип обработки события
   function initFilters() {
     var filterContainer = document.querySelector('.filters');
@@ -175,6 +184,7 @@
 
   initScroll();
   initFilters();
+  initGallery()
 
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;
