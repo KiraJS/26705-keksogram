@@ -30,8 +30,8 @@
     selectedFilter[i].onchange = function(evt) {
       setFilter();
     }
-  }
-  prevButton.onclick = function (evt) {
+  };
+  prevButton.onclick = function(evt) {
     evt.preventDefault();
 
     filterForm.reset();
@@ -53,7 +53,7 @@
   // Восстановление cookie
   if (docCookies.hasItem('upload-filter')) {
     selectedFilter.value = docCookies.getItem('upload-filter');
-  }
+  };
 
   setFilter();
 
