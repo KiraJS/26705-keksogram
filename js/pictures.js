@@ -24,7 +24,7 @@
 
 
   function showLoadFailure (){
-    picturesContainer.classList.add("pictures-failure")
+    picturesContainer.classList.add('pictures-failure')
   }
   //Отрисовка изображений с помощью объекта Photo
   function renderPictures(picturesToRender , pageNumber, replace){
@@ -34,7 +34,7 @@
 
     if(replace){
       picturesContainer.innerHTML = '';
-      picturesContainer.classList.remove("pictures-failure");
+      picturesContainer.classList.remove('pictures-failure');
     }
     //Постраничное отображение
     var picturesFrom = pageNumber * PAGE_SIZE;

@@ -13,18 +13,18 @@
     var newPictureElement = pictureTemplate.content.children[0].cloneNode(true);
     var pictureElement = newPictureElement.getElementsByTagName('img');
 
-    newPictureElement.querySelector(".picture-comments").textContent = this._data['comments'];
-    newPictureElement.querySelector(".picture-likes").textContent = this._data['likes'];
+    newPictureElement.querySelector('.picture-comments').textContent = this._data['comments'];
+    newPictureElement.querySelector('.picture-likes').textContent = this._data['likes'];
     if (this._data['url']) {
       var pictureItem = new Image();
     }
     pictureItem.src = this._data['url'];
 
-    pictureItem.addEventListener("error", function() {
+    pictureItem.addEventListener('error', function() {
       newPictureElement.classList.add('picture-load-failure');
     });
 
-    pictureItem.addEventListener("load", function() {
+    pictureItem.addEventListener('load', function() {
       pictureItem.setAttribute('width', 182);
       pictureItem.setAttribute('height', 182);
       newPictureElement.replaceChild(pictureItem, pictureElement[0]);
