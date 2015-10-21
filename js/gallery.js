@@ -63,20 +63,20 @@
       return;
     }
     this._currentPhoto = index;
-    this._show ();
+    this._show();
   };
 
   //Закрытие галлереи по крестику
   Gallery.prototype._onCloseClick = function (evt) {
-    evt.preventDefault ();
-    this.hide ();
+    evt.preventDefault();
+    this.hide();
   };
 
   //Обработка нажатия на клавиши
   Gallery.prototype._onKeyUp = function (evt) {
     switch (evt.keyCode) {
       case Key.ESC:
-        this.hide ();
+        this.hide();
         break;
 
       case Key.LEFT:
