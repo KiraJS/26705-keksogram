@@ -11,7 +11,7 @@
   function clamp(value, min, max) {
     return Math.max(Math.min(value, min), max);
   }
-  var Gallery = function () {
+  var Gallery = function() {
     this._element = document.body.querySelector('.gallery-overlay');
     this._closeButton = this._element.querySelector('.gallery-overlay-close');
     this._pictureElement = this._element.querySelector('.gallery-overlay-preview');
@@ -24,7 +24,7 @@
 
   };
   //Показ галлереи
-  Gallery.prototype.show = function () {
+  Gallery.prototype.show = function() {
     this._element.classList.remove('invisible');
     this._closeButton.addEventListener('click', this._onCloseClick);
     document.body.addEventListener('keyup', this._onKeyUp);
@@ -32,7 +32,7 @@
   };
 
   //Закрытие галлереи
-  Gallery.prototype.hide = function () {
+  Gallery.prototype.hide = function() {
     this._element.classList.add('invisible');
     this._closeButton.removeEventListener('click', this._onCloseClick);
     document.body.removeEventListener('keyup', this._onKeyUp);
@@ -40,15 +40,15 @@
   };
 
   // Метод  записывает в приватное свойство _photos массив фото
-  Gallery.prototype.setPhotos = function (photos) {
+  Gallery.prototype.setPhotos = function(photos) {
     this._photos = photos;
   };
 
-  Gallery.prototype._showCurrentPhoto = function () {
+  Gallery.prototype._showCurrentPhoto = function() {
     this._pictureElement.innerHTML = '';
     var imageElement = new Image();
 
-    imageElement.onload = function () {
+    imageElement.onload = function() {
       this._pictureElement.appendChild(imageElement);
     }.bind(this);
 
@@ -57,7 +57,7 @@
   };
 
   //Метод записывает в приватное свойство _currentPhoto индекс текущей показанной фотографии, показывает ее на экране и пишет ее номер в соответствующем блоке.
-  Gallery.prototype.setCurrentPhoto = function (index) {
+  Gallery.prototype.setCurrentPhoto = function(index) {
     index = clamp(index, 0, this._photos.length - 1);
     if (this._currentPhoto === index) {
       return;
@@ -67,13 +67,13 @@
   };
 
   //Закрытие галлереи по крестику
-  Gallery.prototype._onCloseClick = function (evt) {
+  Gallery.prototype._onCloseClick = function(evt) {
     evt.preventDefault();
     this.hide();
   };
 
   //Обработка нажатия на клавиши
-  Gallery.prototype._onKeyUp = function (evt) {
+  Gallery.prototype._onKeyUp = function(evt) {
     switch (evt.keyCode) {
       case Key.ESC:
         this.hide();
