@@ -1,7 +1,7 @@
 /* global Photo: true Gallery: true */
 'use strict';
 
-(function () {
+(function() {
 
   var ReadyState = {
     'UNSENT': 0,
@@ -30,7 +30,7 @@
     picturesContainer.classList.add('pictures-failure');
   };
   //Отрисовка изображений с помощью объекта Photo
-  function renderPictures(picturesToRender, pageNumber, replace) {
+  function renderPictures (picturesToRender, pageNumber, replace) {
     // Добавила еще один аргумент и условия для того, чтобы при скроле потом контейнер не отрисовывался заново, а добавлялся
     replace = typeof replace !== 'undefined' ? replace : true;
     pageNumber = pageNumber || 0; //Нормализация аргумента на случай если он не передан
@@ -62,7 +62,7 @@
     xhr.open('get', 'data/pictures.json');
     xhr.send();
 
-    xhr.onreadystatechange = function (evt) {
+    xhr.onreadystatechange = function(evt) {
       var loadedXhr = evt.target;
 
       switch (loadedXhr.readyState) {
@@ -187,7 +187,7 @@
 
   initScroll();
   initFilters();
-  initGallery()
+  initGallery();
 
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;
