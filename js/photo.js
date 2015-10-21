@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
 
   var pictureTemplate = document.getElementById('picture-template');

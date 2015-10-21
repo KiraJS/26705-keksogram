@@ -1,3 +1,5 @@
+'use strict';
+
 (function() {
   var uploadForm = document.forms['upload-select-image']; //форма выбора изображения - 1 шаг
   var resizeForm = document.forms['upload-resize']; //форма редактирования изображения - 2 шаг
