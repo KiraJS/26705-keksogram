@@ -6,7 +6,7 @@
   var previewImage = filterForm.querySelector('.filter-image-preview'); //загруженное изображение
   var prevButton = filterForm['filter-prev']; // Кнопка отправки формы
   var selectedFilter = filterForm['upload-filter']; // Коллекция фильтров
-  
+
   var filterMap;
 
   // Функция добавляет коллекцию фильтров в переменную filterMap, объявленную выше
@@ -29,7 +29,7 @@
       setFilter();
     }
   }
-  prevButton.onclick = function(evt) {
+  prevButton.onclick = function (evt) {
     evt.preventDefault();
 
     filterForm.reset();
@@ -44,7 +44,7 @@
 
     uploadForm.classList.remove('invisible');
     filterForm.classList.add('invisible');
-    
+
     //filterForm.submit();
 
   }
@@ -54,5 +54,5 @@
   }
 
   setFilter();
-  
+
 })();
