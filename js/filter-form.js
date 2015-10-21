@@ -20,7 +20,7 @@
         'none': 'filter-none',
         'chrome': 'filter-chrome',
         'sepia': 'filter-sepia'
-      };
+      }
     }
     previewImage.className = 'filter-image-preview' + ' ' + filterMap[selectedFilter.value];
   };
@@ -49,7 +49,7 @@
 
     //filterForm.submit();
 
-  }
+  };
   // Восстановление cookie
   if (docCookies.hasItem('upload-filter')) {
     selectedFilter.value = docCookies.getItem('upload-filter');

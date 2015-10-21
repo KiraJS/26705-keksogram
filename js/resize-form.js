@@ -35,7 +35,7 @@
 
     formValidate = function (input) {
       if (input == 'x') {
-        if (resizeX.value < 0){
+        if (resizeX.value < 0) {
           titleForX.style.display = 'inline-block';
           titleForX.innerHTML = 'Значение должно быть больше или равно 0';
         };
