@@ -1,3 +1,6 @@
+/* global Photo: true Gallery: true */
+'use strict';
+
 (function() {
 
   var ReadyState = {
@@ -12,7 +15,7 @@
   filterContainer.classList.add('hidden');
 
   var picturesContainer = document.querySelector('.pictures');
-  var pictureTemplate = document.getElementById('picture-template');
+  var gallery = new Gallery();
 
   var pictures;
   var PAGE_SIZE = 12; // Константа хранит размер страницы
@@ -22,18 +25,18 @@
   var pictureFragment = document.createDocumentFragment();
 
 
-  function showLoadFailure (){
-    picturesContainer.classList.add("pictures-failure")
+  function showLoadFailure() {
+    picturesContainer.classList.add('pictures-failure');
   }
   //Отрисовка изображений с помощью объекта Photo
-  function renderPictures(picturesToRender , pageNumber, replace){
+  function renderPictures(picturesToRender, pageNumber, replace) {
     // Добавила еще один аргумент и условия для того, чтобы при скроле потом контейнер не отрисовывался заново, а добавлялся
     replace = typeof replace !== 'undefined' ? replace : true;
     pageNumber = pageNumber || 0; //Нормализация аргумента на случай если он не передан
 
-    if(replace){
+    if (replace) {
       picturesContainer.innerHTML = '';
-      picturesContainer.classList.remove("pictures-failure");
+      picturesContainer.classList.remove('pictures-failure');
     }
     //Постраничное отображение
     var picturesFrom = pageNumber * PAGE_SIZE;
@@ -41,15 +44,11 @@
     picturesToRender = picturesToRender.slice(picturesFrom, picturesTo);
 
     picturesToRender.forEach(function(pictureData) {
-      var newPictureElement = new Photo(pictureData)
-      newPictureElement.render(pictureFragment)
+      var newPictureElement = new Photo(pictureData);
+      newPictureElement.render(pictureFragment);
     });
     picturesContainer.appendChild(pictureFragment);
     filterContainer.classList.remove('hidden');
-  };
-
-  function showLoadFailure() {
-    picturesContainer.classList.add('pictures-failure');
   }
 
   function loadPictures(callback) {
@@ -88,8 +87,8 @@
     };
   }
 
-  function filterPictures(pictures, filterID) {
-    var filteredPictures = pictures.slice(0);
+  function filterPictures(picturesToFilter, filterID) {
+    var filteredPictures = picturesToFilter.slice(0);
     switch (filterID) {
 
       case 'filter-new':
@@ -121,10 +120,10 @@
         break;
 
       default:
-        filteredPictures = pictures.slice(0);
+        filteredPictures = picturesToFilter.slice(0);
         break;
     }
-    localStorage.setItem('filterID', filterID)
+    localStorage.setItem('filterID', filterID);
     return filteredPictures;
   }
 
@@ -136,45 +135,53 @@
   }
 
 
-  function isNextPageAvailable (){
+  function isNextPageAvailable() {
     return currentPage < Math.ceil(pictures.length / PAGE_SIZE);
-  };
+  }
 
-  function isAtTheBottom (){
+  function isAtTheBottom() {
     var GAP = 100;
     return picturesContainer.getBoundingClientRect().bottom - GAP <= window.innerHeight;
-  };
+  }
 
   // Скролл. Проверка находимся ли мы внизу страницы и можно ли отрисовать следующую
-  function checkNextPage(){
-    if (isAtTheBottom() && isNextPageAvailable ()){
+  function checkNextPage() {
+    if (isAtTheBottom() && isNextPageAvailable()) {
       //Создание кастомного события - достижение низа страницы
-      window.dispatchEvent(new CustomEvent ('loadneeded'));
+      window.dispatchEvent(new CustomEvent('loadneeded'));
     }
   }
   // Скролл. Запуск функции с таймаутом в 1 сек
-  function initScroll(){
+  function initScroll() {
     var someTimeout;
-    window.addEventListener('scroll', function(){
+    window.addEventListener('scroll', function() {
       clearTimeout(someTimeout);
       someTimeout = setTimeout(checkNextPage, 100);
     });
     // Вызов кастомного события - достижение низа страницы
-    window.addEventListener('loadneeded', function(){
-      renderPictures(currentPictures, currentPage++, false)
-    })
-  };
+    window.addEventListener('loadneeded', function() {
+      renderPictures(currentPictures, currentPage++, false);
+    });
+  }
+
+  function initGallery() {
+    window.addEventListener('showgallery', function(evt) {
+      gallery.setPhotos(evt.detail.photoElement.getPhotos());
+      gallery.show();
+    });
+  }
+
   // Поменяла тип обработки события
   function initFilters() {
-    var filterContainer = document.querySelector('.filters');
-    filterContainer.addEventListener('click', function(evt){
+    filterContainer.addEventListener('click', function(evt) {
       var clickedFilter = evt.target;
-      setActiveFilter(clickedFilter.id)
-    })
+      setActiveFilter(clickedFilter.id);
+    });
   }
 
   initScroll();
   initFilters();
+  initGallery();
 
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;

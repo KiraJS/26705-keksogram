@@ -1,68 +1,93 @@
+'use strict';
+
 (function() {
 
-  // Константа для кода клавиш
   var Key = {
     'ESC': 27,
     'LEFT': 37,
     'RIGHT': 39
   };
 
-  // Получаю контейнер с картинкой, контейнер для галлереи и кнопку закрытия галлереи
-  var picturesContainer = document.querySelector('.pictures');
-  var galleryElement = document.querySelector('.gallery-overlay');
-  var closeButton = document.querySelector('.gallery-overlay-close');
+  function clamp(value, min, max) {
+    return Math.max(Math.min(value, min), max);
+  }
+  var Gallery = function() {
+    this._element = document.body.querySelector('.gallery-overlay');
+    this._closeButton = this._element.querySelector('.gallery-overlay-close');
+    this._pictureElement = this._element.querySelector('.gallery-overlay-preview');
 
-  //Проверяет имеет ли таргет класс pictures
-function doesHaveParent(element, className) {
-  do {
-    if (element.classList.contains(className)) {
-      return !element.classList.contains('picture-load-failure');
+    this._currentPhoto = 0;
+    this._photos = [];
+
+    this._onCloseClick = this._onCloseClick.bind(this);
+    this._onKeyUp = this._onKeyUp.bind(this);
+
+  };
+  //Показ галлереи
+  Gallery.prototype.show = function() {
+    this._element.classList.remove('invisible');
+    this._closeButton.addEventListener('click', this._onCloseClick);
+    document.body.addEventListener('keyup', this._onKeyUp);
+    this._showCurrentPhoto();
+  };
+
+  //Закрытие галлереи
+  Gallery.prototype.hide = function() {
+    this._element.classList.add('invisible');
+    this._closeButton.removeEventListener('click', this._onCloseClick);
+    document.body.removeEventListener('keyup', this._onKeyUp);
+    this._currentPhoto = 0;
+  };
+
+  // Метод  записывает в приватное свойство _photos массив фото
+  Gallery.prototype.setPhotos = function(photos) {
+    this._photos = photos;
+  };
+
+  Gallery.prototype._showCurrentPhoto = function() {
+    this._pictureElement.innerHTML = '';
+    var imageElement = new Image();
+
+    imageElement.onload = function() {
+      this._pictureElement.appendChild(imageElement);
+    }.bind(this);
+
+
+    imageElement.src = this._photos[this._currentPhoto];
+  };
+
+  //Метод записывает в приватное свойство _currentPhoto индекс текущей показанной фотографии, показывает ее на экране и пишет ее номер в соответствующем блоке.
+  Gallery.prototype.setCurrentPhoto = function(index) {
+    index = clamp(index, 0, this._photos.length - 1);
+    if (this._currentPhoto === index) {
+      return;
     }
-    element = element.parentElement;
-  } while (element);
+    this._currentPhoto = index;
+    this._show();
+  };
 
-  return false;
-}
-  // Закрытие галлереи
-  function hideGallery(){
-    galleryElement.classList.add('invisible');
-    closeButton.removeEventListener('click', closeHandler);
-    document.body.removeEventListener('keydown', keyHandler);
-  }
-
-  function closeHandler(evt){
+  //Закрытие галлереи по крестику
+  Gallery.prototype._onCloseClick = function(evt) {
     evt.preventDefault();
-    hideGallery();
-  }
+    this.hide();
+  };
 
-//Обработчик нажатия esc
-  function keyHandler(evt) {
+  //Обработка нажатия на клавиши
+  Gallery.prototype._onKeyUp = function(evt) {
     switch (evt.keyCode) {
-      case Key.LEFT:
-        console.log('show previous photo');
-        break;
-      case Key.RIGHT:
-        console.log('show next photo');
-        break;
       case Key.ESC:
-        hideGallery();
+        this.hide();
         break;
-      default: break;
+
+      case Key.LEFT:
+        this.setCurrentPhoto(this._currentPhoto - 1);
+        break;
+
+      case Key.RIGHT:
+        this.setCurrentPhoto(this._currentPhoto + 1);
+        break;
     }
-  }
-
-  // Открытие галлереи
-  function showGallery(){
-    galleryElement.classList.remove('invisible');
-    closeButton.addEventListener('click', closeHandler);
-    document.body.addEventListener('keydown', keyHandler);
-  }
-
-  picturesContainer.addEventListener('click', function(evt){
-    evt.preventDefault();
-    if(doesHaveParent(evt.target, 'picture')){
-      showGallery();
-    }
-  })
-
+  };
+  //Вынесли Gallery в глобальную область видимости
+  window.Gallery = Gallery;
 })();
