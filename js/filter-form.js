@@ -20,17 +20,17 @@
         'none': 'filter-none',
         'chrome': 'filter-chrome',
         'sepia': 'filter-sepia'
-      }
+      };
     }
     previewImage.className = 'filter-image-preview' + ' ' + filterMap[selectedFilter.value];
-  };
+  }
 
   // Цикл перебирает массив фильтров и в случае выбранного фильтра вызывает фунццию setFilter, которая добавляет нужный класс для применения css-фильтра
   for (var i = 0, l = selectedFilter.length; i < l; i++) {
-    selectedFilter[i].onchange = function(evt) {
+    selectedFilter[i].onchange = function() {
       setFilter();
-    }
-  };
+    };
+  }
   prevButton.onclick = function(evt) {
     evt.preventDefault();
 
@@ -39,7 +39,7 @@
     resizeForm.classList.remove('invisible');
   };
 
-  filterForm.onsubmit = function() {
+  filterForm.onsubmit = function(evt) {
     evt.preventDefault();
     // Запись в cookie.
     docCookies.setItem('upload-filter', selectedFilter.value);
@@ -53,7 +53,7 @@
   // Восстановление cookie
   if (docCookies.hasItem('upload-filter')) {
     selectedFilter.value = docCookies.getItem('upload-filter');
-  };
+  }
 
   setFilter();
 
