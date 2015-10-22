@@ -87,8 +87,8 @@
     };
   }
 
-  function filterPictures(pictures, filterID) {
-    var filteredPictures = pictures.slice(0);
+  function filterPictures(picturesToFilter, filterID) {
+    var filteredPictures = picturesToFilter.slice(0);
     switch (filterID) {
 
       case 'filter-new':
@@ -120,7 +120,7 @@
         break;
 
       default:
-        filteredPictures = pictures.slice(0);
+        filteredPictures = picturesToFilter.slice(0);
         break;
     }
     localStorage.setItem('filterID', filterID);
@@ -173,7 +173,6 @@
 
   // Поменяла тип обработки события
   function initFilters() {
-    var filterContainer = document.querySelector('.filters');
     filterContainer.addEventListener('click', function(evt) {
       var clickedFilter = evt.target;
       setActiveFilter(clickedFilter.id);
