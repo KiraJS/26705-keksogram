@@ -16,7 +16,7 @@
   var titleForY = document.getElementById('upload-resize-title-Y');
   var titleForS = document.getElementById('upload-resize-title-S');
 
-  previewImage.onload = function(){
+  previewImage.onload = function() {
     var imgHeight = previewImage.height;
     var imgWidth = previewImage.width;
     var minSize = Math.min(imgHeight, imgWidth);
@@ -32,43 +32,43 @@
     var resizeYMax = parseInt(imgHeight - resizeSize.value);
     var resizeSizeMax = minSize;
 
-    formValidate = function(input){
-      if (input == 'x'){
-        if (resizeX.value < 0){
+    formValidate = function(input) {
+      if (input === 'x') {
+        if (resizeX.value < 0) {
           titleForX.style.display = 'inline-block';
-          titleForX.innerHTML = 'Значение должно быть больше или равно 0'
+          titleForX.innerHTML = 'Значение должно быть больше или равно 0';
         }
-        else if(resizeX.value > resizeXMax){
+        else if (resizeX.value > resizeXMax) {
           titleForX.style.display = 'inline-block';
           titleForX.innerHTML = 'Значение не может превышать ' + resizeXMax;
         }
-        else{
+        else {
           titleForX.style.display = 'none';
         }
       }
-      else if (input == 'y'){
-        if (resizeY.value < 0){
+      else if (input === 'y') {
+        if (resizeY.value < 0) {
           titleForY.style.display = 'inline-block';
-          titleForY.innerHTML = 'Значение должно быть больше или равно 0'
+          titleForY.innerHTML = 'Значение должно быть больше или равно 0';
         }
-        else if(resizeY.value > resizeYMax){
+        else if (resizeY.value > resizeYMax) {
           titleForY.style.display = 'inline-block';
           titleForY.innerHTML = 'Значение не может превышать ' + resizeYMax;
         }
-        else{
+        else {
           titleForY.style.display = 'none';
         }
       }
       else {
-        if (resizeSize.value < 0){
+        if (resizeSize.value < 0) {
           titleForS.style.display = 'inline-block';
-          titleForS.innerHTML = 'Значение должно быть больше или равно 0'
+          titleForS.innerHTML = 'Значение должно быть больше или равно 0';
         }
-        else if(resizeSize.value > resizeSize.max){
+        else if (resizeSize.value > resizeSize.max) {
           titleForS.style.display = 'inline-block';
           titleForS.innerHTML = 'Значение не может превышать ' + resizeSizeMax;
         }
-        else{
+        else {
           titleForS.style.display = 'none';
         }
       }
