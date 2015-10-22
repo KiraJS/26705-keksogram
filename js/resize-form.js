@@ -28,8 +28,8 @@
     resizeX.min = resizeX.value = 0;
     resizeY.min = resizeY.value = 0;
 
-    var resizeXMax = parseInt(imgWidth - resizeSize.value);
-    var resizeYMax = parseInt(imgHeight - resizeSize.value);
+    var resizeXMax = parseInt(imgWidth - resizeSize.value, 0);
+    var resizeYMax = parseInt(imgHeight - resizeSize.value, 0);
     var resizeSizeMax = minSize;
 
     formValidate = function(input) {
@@ -37,42 +37,34 @@
         if (resizeX.value < 0) {
           titleForX.style.display = 'inline-block';
           titleForX.innerHTML = 'Значение должно быть больше или равно 0';
-        }
-        else if (resizeX.value > resizeXMax) {
+        } else if (resizeX.value > resizeXMax) {
           titleForX.style.display = 'inline-block';
           titleForX.innerHTML = 'Значение не может превышать ' + resizeXMax;
-        }
-        else {
+        } else {
           titleForX.style.display = 'none';
         }
-      }
-      else if (input === 'y') {
+      } else if (input === 'y') {
         if (resizeY.value < 0) {
           titleForY.style.display = 'inline-block';
           titleForY.innerHTML = 'Значение должно быть больше или равно 0';
-        }
-        else if (resizeY.value > resizeYMax) {
+        } else if (resizeY.value > resizeYMax) {
           titleForY.style.display = 'inline-block';
           titleForY.innerHTML = 'Значение не может превышать ' + resizeYMax;
-        }
-        else {
+        } else {
           titleForY.style.display = 'none';
         }
-      }
-      else {
+      } else {
         if (resizeSize.value < 0) {
           titleForS.style.display = 'inline-block';
           titleForS.innerHTML = 'Значение должно быть больше или равно 0';
-        }
-        else if (resizeSize.value > resizeSize.max) {
+        } else if (resizeSize.value > resizeSize.max) {
           titleForS.style.display = 'inline-block';
           titleForS.innerHTML = 'Значение не может превышать ' + resizeSizeMax;
-        }
-        else {
+        } else {
           titleForS.style.display = 'none';
         }
       }
-    }
+    };
 
   };
 
