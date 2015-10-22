@@ -65,7 +65,7 @@
         }
       }
     };
-
+    formValidate();
   };
 
   prevButton.onclick = function(evt) {
