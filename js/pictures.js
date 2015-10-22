@@ -16,7 +16,6 @@
 
   var picturesContainer = document.querySelector('.pictures');
   var gallery = new Gallery();
-  var pictureTemplate = document.getElementById('picture-template');
 
   var pictures;
   var PAGE_SIZE = 12; // Константа хранит размер страницы
@@ -28,9 +27,9 @@
 
   function showLoadFailure() {
     picturesContainer.classList.add('pictures-failure');
-  };
+  }
   //Отрисовка изображений с помощью объекта Photo
-  function renderPictures (picturesToRender, pageNumber, replace) {
+  function renderPictures(picturesToRender, pageNumber, replace) {
     // Добавила еще один аргумент и условия для того, чтобы при скроле потом контейнер не отрисовывался заново, а добавлялся
     replace = typeof replace !== 'undefined' ? replace : true;
     pageNumber = pageNumber || 0; //Нормализация аргумента на случай если он не передан
@@ -44,16 +43,12 @@
     var picturesTo = picturesFrom + PAGE_SIZE;
     picturesToRender = picturesToRender.slice(picturesFrom, picturesTo);
 
-    picturesToRender.forEach(function (pictureData) {
+    picturesToRender.forEach(function(pictureData) {
       var newPictureElement = new Photo(pictureData);
       newPictureElement.render(pictureFragment);
     });
     picturesContainer.appendChild(pictureFragment);
     filterContainer.classList.remove('hidden');
-  };
-
-  function showLoadFailure() {
-    picturesContainer.classList.add('pictures-failure');
   }
 
   function loadPictures(callback) {
@@ -78,19 +73,19 @@
             var data = loadedXhr.response.toString();
             picturesContainer.classList.remove('pictures-loading');
             return callback(JSON.parse(data));
-          };
+          }
 
           if (loadedXhr.status > 400) {
             showLoadFailure();
-          };
+          }
           break;
-      };
+      }
     };
 
     xhr.ontimeout = function() {
       showLoadFailure();
     };
-  };
+  }
 
   function filterPictures(pictures, filterID) {
     var filteredPictures = pictures.slice(0);
@@ -100,13 +95,13 @@
         filteredPictures = filteredPictures.sort(function(a, b) {
           if (a.date > b.date) {
             return -1;
-          };
+          }
           if (a.date < b.date) {
             return 1;
-          };
+          }
           if (a.date === b.date) {
             return 0;
-          };
+          }
         });
         break;
 
@@ -114,75 +109,75 @@
         filteredPictures = filteredPictures.sort(function(a, b) {
           if (a.comments > b.comments || (b.comments && a.comments === 0)) {
             return -1;
-          };
+          }
           if (a.comments < b.comments || (a.comments && b.comments === 0)) {
             return 1;
-          };
+          }
           if (a.comments === b.comments) {
             return 0;
-          };
+          }
         });
         break;
 
       default:
         filteredPictures = pictures.slice(0);
         break;
-    };
-    localStorage.setItem('filterID', filterID)
+    }
+    localStorage.setItem('filterID', filterID);
     return filteredPictures;
   }
 
 
-  function setActiveFilter (filterID) {
+  function setActiveFilter(filterID) {
     currentPictures = filterPictures(pictures, filterID);
     currentPage = 0;
     renderPictures(currentPictures, currentPage, true);
   }
 
 
-  function isNextPageAvailable () {
+  function isNextPageAvailable() {
     return currentPage < Math.ceil(pictures.length / PAGE_SIZE);
-  };
+  }
 
-  function isAtTheBottom () {
+  function isAtTheBottom() {
     var GAP = 100;
     return picturesContainer.getBoundingClientRect().bottom - GAP <= window.innerHeight;
-  };
+  }
 
   // Скролл. Проверка находимся ли мы внизу страницы и можно ли отрисовать следующую
-  function checkNextPage () {
-    if (isAtTheBottom() && isNextPageAvailable ()) {
+  function checkNextPage() {
+    if (isAtTheBottom() && isNextPageAvailable()) {
       //Создание кастомного события - достижение низа страницы
-      window.dispatchEvent(new CustomEvent ('loadneeded'));
+      window.dispatchEvent(new CustomEvent('loadneeded'));
     }
   }
   // Скролл. Запуск функции с таймаутом в 1 сек
-  function initScroll () {
+  function initScroll() {
     var someTimeout;
-    window.addEventListener('scroll', function(){
+    window.addEventListener('scroll', function() {
       clearTimeout(someTimeout);
       someTimeout = setTimeout(checkNextPage, 100);
     });
     // Вызов кастомного события - достижение низа страницы
-    window.addEventListener('loadneeded', function(){
-      renderPictures(currentPictures, currentPage++, false)
-    })
-  };
+    window.addEventListener('loadneeded', function() {
+      renderPictures(currentPictures, currentPage++, false);
+    });
+  }
 
-  function initGallery () {
-    window.addEventListener('showgallery', function(evt){
+  function initGallery() {
+    window.addEventListener('showgallery', function(evt) {
       gallery.setPhotos(evt.detail.photoElement.getPhotos());
       gallery.show();
-    })
+    });
   }
 
   // Поменяла тип обработки события
-  function initFilters () {
+  function initFilters() {
     var filterContainer = document.querySelector('.filters');
-    filterContainer.addEventListener('click', function(evt){
+    filterContainer.addEventListener('click', function(evt) {
       var clickedFilter = evt.target;
-      setActiveFilter(clickedFilter.id)
-    })
+      setActiveFilter(clickedFilter.id);
+    });
   }
 
   initScroll();
