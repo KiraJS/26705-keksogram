@@ -407,3 +407,24 @@ input[type=radio]:checked + .upload-filter-label {
   height: 640px;
   width: 640px;
 }
+
+<!--MainStyle-->
+.upload-resize-controls label{
+  position: relative;
+}
+.upload-resize-title{
+  position: absolute;
+  content: "";
+  background: white;
+  border: 1px solid yellow;
+  border-radius: 5px;
+  min-width:150px;
+  min-height: 20px;
+  top: -35px;
+  left: 0;
+  display: none;
+  color: black;
+  font-size: 8px;
+  line-height: normal;
+  padding: 5px;
+}
