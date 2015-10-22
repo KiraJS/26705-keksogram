@@ -38,14 +38,14 @@
         if (resizeX.value < 0) {
           titleForX.style.display = 'inline-block';
           titleForX.innerHTML = 'Значение должно быть больше или равно 0';
-        };
+        }
         else if (resizeX.value > resizeXMax) {
           titleForX.style.display = 'inline-block';
           titleForX.innerHTML = 'Значение не может превышать ' + resizeXMax;
-        };
+        }
         else {
           titleForX.style.display = 'none';
-        };
+        }
       };
       else if (input == 'y') {
         if (resizeY.value < 0){
