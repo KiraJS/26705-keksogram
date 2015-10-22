@@ -32,7 +32,7 @@
     var resizeYMax = parseInt(imgHeight - resizeSize.value, 0);
     var resizeSizeMax = minSize;
 
-    formValidate = function(input) {
+    var formValidate = function(input) {
       if (input === 'x') {
         if (resizeX.value < 0) {
           titleForX.style.display = 'inline-block';
