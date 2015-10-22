@@ -73,7 +73,7 @@
           titleForS.style.display = 'none';
         }
       }
-    };
+    }
 
   };
   prevButton.onclick = function(evt) {
@@ -86,7 +86,7 @@
     uploadForm.classList.remove('invisible');
   };
 
-  resizeForm.onsubmit = function (evt) {
+  resizeForm.onsubmit = function(evt) {
     evt.preventDefault();
     filterForm.elements['filter-image-src'] = previewImage.src;
 
