@@ -1,5 +1,5 @@
+/* global Resizer: true resizer: true*/
 'use strict';
-
 (function() {
   var uploadForm = document.forms['upload-select-image'];
   var resizeForm = document.forms['upload-resize'];
@@ -30,7 +30,13 @@
       sessionStorage.setItem('uploaded-image', image);
       resizeForm.querySelector('.resize-image-preview').src = image;
       filterForm.querySelector('.filter-image-preview').src = image;
+      if (resizer) {
+        resizer.remove();
+      }
+      resizer = new Resizer(image);
+      resizer.setElement(resizeForm);
 
+      document.querySelector('.resize-image-preview').classList.add('invisible');
       uploadForm.classList.add('invisible');
       resizeForm.classList.remove('invisible');
     });
