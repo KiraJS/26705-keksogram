@@ -175,8 +175,21 @@
   function initFilters() {
     filterContainer.addEventListener('click', function(evt) {
       var clickedFilter = evt.target;
-      setActiveFilter(clickedFilter.id);
+      //Пишем хэш вместо фильтрации
+      location.hash = 'filters/' + evt.target.value;
     });
+  }
+  // обработчик события hashchange объекта window который бы вызывал метод parseURL.
+  window.addEventListener('hashchange', function() {
+    parseURL();
+    });
+
+  //Метод parseURL, который с помощью регулярного выражения обрабатывает хэш адресной строки и если он соответствует паттерну запускает фильтрацию
+  function parseURL() {
+    var filterHash = location.hash.match(/^#filters\/(\S+)$/);
+    if (filterHash) {
+      setActiveFilter(filterHash[1] || 'popular');
+    }
   }
 
   initScroll();
@@ -185,10 +198,9 @@
 
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;
-    //Записала в LS, получила из LS, исправила баг с подсветкой фильтра
-    setActiveFilter(localStorage.getItem('filterID') || 'filter-popular');
-    var checkedFilter = document.getElementById(localStorage.getItem('filterID'));
-    checkedFilter.checked = true;
+    //Убрала код, который записывает  состояние фильтров в localStorage и код, читающий значение фильтра по умолчанию из него
+    // Заменила setActiveFilter  на вызов метода parseURL
+    parseURL();
   });
 
 })();
