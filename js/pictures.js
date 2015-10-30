@@ -171,7 +171,7 @@ define([
     });
     // Вызов кастомного события - достижение низа страницы
     window.addEventListener('loadneeded', function() {
-      renderPictures(currentPictures, currentPage++, false);
+      renderPictures(currentPictures, ++currentPage, false);
     });
   }
 
