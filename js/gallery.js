@@ -11,6 +11,10 @@ define(function() {
   function clamp(value, min, max) {
     return Math.max(Math.min(value, min), max);
   }
+  /**
+   * Объект типа Gallery
+   * @type {Gallery}
+   */
   var Gallery = function() {
     this._element = document.body.querySelector('.gallery-overlay');
     this._closeButton = this._element.querySelector('.gallery-overlay-close');
@@ -23,7 +27,9 @@ define(function() {
     this._onKeyUp = this._onKeyUp.bind(this);
 
   };
-  //Показ галлереи
+  /**
+   * Показ галлереи
+   */
   Gallery.prototype.show = function() {
     this._element.classList.remove('invisible');
     this._closeButton.addEventListener('click', this._onCloseClick);
@@ -31,7 +37,9 @@ define(function() {
     this._showCurrentPhoto();
   };
 
-  //Закрытие галлереи
+  /**
+   * Закрытие галлереи
+   */
   Gallery.prototype.hide = function() {
     this._element.classList.add('invisible');
     this._closeButton.removeEventListener('click', this._onCloseClick);
@@ -39,11 +47,16 @@ define(function() {
     this._currentPhoto = 0;
   };
 
-  // Метод  записывает в приватное свойство _photos массив фото
+  /**
+   * Метод  записывает в приватное свойство _photos массив фото
+   */
   Gallery.prototype.setPhotos = function(photos) {
     this._photos = photos;
   };
-
+  /**
+   * Метод показывает текущую фотографию.
+   * @private
+   */
   Gallery.prototype._showCurrentPhoto = function() {
     this._pictureElement.innerHTML = '';
     var imageElement = new Image();
@@ -55,8 +68,10 @@ define(function() {
 
     imageElement.src = this._photos[this._currentPhoto];
   };
-
-  //Метод записывает в приватное свойство _currentPhoto индекс текущей показанной фотографии, показывает ее на экране и пишет ее номер в соответствующем блоке.
+  /**
+   * Метод записывает в приватное свойство _currentPhoto индекс текущей показанной фотографии,
+   * показывает ее на экране и пишет ее номер в соответствующем блоке.
+   */
   Gallery.prototype.setCurrentPhoto = function(index) {
     index = clamp(index, 0, this._photos.length - 1);
     if (this._currentPhoto === index) {
@@ -65,14 +80,18 @@ define(function() {
     this._currentPhoto = index;
     this._show();
   };
-
-  //Закрытие галлереи по крестику
+  /**
+   * Закрытие галлереи по крестику
+   * @private
+   */
   Gallery.prototype._onCloseClick = function(evt) {
     evt.preventDefault();
     this.hide();
   };
-
-  //Обработка нажатия на клавиши
+  /**
+   * Обработка нажатия на клавиши
+   * @private
+   */
   Gallery.prototype._onKeyUp = function(evt) {
     switch (evt.keyCode) {
       case Key.ESC:

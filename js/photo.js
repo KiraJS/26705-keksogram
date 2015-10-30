@@ -4,13 +4,18 @@ define(function() {
 
   var pictureTemplate = document.getElementById('picture-template');
 
-  //Создала конструктор для фото
+  /**
+   * Объект типа Photo
+   * @type {Gallery}
+   */
   var Photo = function(data) {
     this._data = data;
-    this._onClick = this._onClick.bind(this); // Привязала клик к той фотографии на которой он произойдет
+    this._onClick = this._onClick.bind(this);
   };
 
-  //Добавила метод отрисовки изображений через прототип
+  /**
+   * Метод отрисовки изображений через прототип
+   */
   Photo.prototype.render = function(container) {
     var newPictureElement = pictureTemplate.content.children[0].cloneNode(true);
     var pictureElement = newPictureElement.getElementsByTagName('img');
@@ -38,15 +43,18 @@ define(function() {
     this._element.addEventListener('click', this._onClick);
   };
 
-
-  //Добавила в прототип метод обратный render
+  /**
+   * Метод обратный render
+   */
   Photo.prototype.unrender = function() {
     this._element.parentNode.removeChild(this._element);
     this._element.removeEventListener('click', this._onClick);
     this._element = null;
   };
 
-  //Обработка клика
+  /**
+   * Обработка клика по фотографии
+   */
   Photo.prototype._onClick = function(evt) {
     evt.preventDefault();
     if (!this._element.classList.contains('picture-load-failure')) {
@@ -59,6 +67,5 @@ define(function() {
     return this._data.pictures;
   };
 
-  //Вынесла переменную Photo в глобальную область видимости
   return Photo;
 });

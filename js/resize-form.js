@@ -2,21 +2,61 @@
 'use strict';
 
 define(function() {
+  /**
+   * Форма загрузки
+   * @type {Еlement}
+   */
   var uploadForm = document.forms['upload-select-image'];
+
+  /**
+   * Форма кадрирования
+   * @type {Еlement}
+   */
   var resizeForm = document.forms['upload-resize'];
+
+  /**
+   * Фильтр
+   * @type {Еlement}
+   */
   var filterForm = document.forms['upload-filter'];
+
+  /**
+   * Превью загружаемого изображения
+   * @type {Еlement}
+   */
   var previewImage = resizeForm.querySelector('.resize-image-preview');
+
+  /**
+   * Кнопка перехода к ледующему шагу
+   * @type {Еlement}
+   */
   var prevButton = resizeForm['resize-prev'];
 
+  /**
+   * Поле для ввода значения сдвига по оси X
+   * @type {Еlement}
+   */
   var resizeX = resizeForm['resize-x'];
+
+  /**
+   * Поле для ввода значения сдвига по оси Y
+   * @type {Еlement}
+   */
   var resizeY = resizeForm['resize-y'];
+
+  /**
+   * Поле для ввода значения размера стороны
+   * @type {Еlement}
+   */
   var resizeS = resizeForm['resize-size'];
 
   var imageHeight;
   var imageWidth;
   var imageConstraint;
 
-
+  /**
+   * Устанавливает ограничения по умолчанию для вновь загруженного изображения.
+   */
   window.addEventListener('imagecreated', function() {
     imageConstraint = resizer.getConstraint();
     imageHeight = resizer.getImageSizeHeight();
@@ -34,6 +74,9 @@ define(function() {
     resizeS.min = 50;
   });
 
+  /**
+   * Проверяет что новые значения ограничений не превышают допустимые и меняет значения при необходимости
+   */
   window.addEventListener('resizerchange', function() {
     imageConstraint = resizer.getConstraint();
 
@@ -54,6 +97,9 @@ define(function() {
     }
   });
 
+  /**
+   * Валидация изменения размера стороны
+   */
   resizeS.onchange = function() {
     if (Number(resizeS.value) > Number(resizeS.max)) {
       resizeS.value = resizeS.max;
@@ -77,6 +123,9 @@ define(function() {
     resizeY.value = Math.floor(imageConstraint.y);
   };
 
+  /**
+   * Валидация смещения по оси X
+   */
   resizeX.onchange = function() {
     if (Number(resizeX.value) > Number(resizeX.max)) {
       resizeX.value = resizeX.max;
@@ -87,6 +136,9 @@ define(function() {
     resizer.setConstraint(Number(resizeX.value), Number(resizeY.value), Number(resizeS.value));
   };
 
+  /**
+   * Валидация смещения по оси Y
+   */
   resizeY.onchange = function() {
     if (Number(resizeY.value) > Number(resizeY.max)) {
       resizeY.value = resizeY.max;
