@@ -187,9 +187,12 @@
   //Метод parseURL, который с помощью регулярного выражения обрабатывает хэш адресной строки и если он соответствует паттерну запускает фильтрацию
   function parseURL() {
     var filterHash = location.hash.match(/^#filters\/(\S+)$/);
+    var filterName = 'filter-popular';
     if (filterHash) {
-      setActiveFilter(filterHash[1] || 'popular');
+      filterName = 'filter-' + filterHash[1];
     }
+
+    setActiveFilter(filterName);
   }
 
   initScroll();
