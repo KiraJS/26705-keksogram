@@ -15,6 +15,7 @@ define(function() {
   var imageWidth;
   var imageConstraint;
 
+
   window.addEventListener('imagecreated', function() {
     imageConstraint = resizer.getConstraint();
     imageHeight = resizer.getImageSizeHeight();

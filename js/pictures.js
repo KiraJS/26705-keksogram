@@ -7,12 +7,12 @@ requirejs.config({
 define([
   'photo',
   'gallery',
-  'resize-picture',
   'logo-background',
   'upload-form',
   'resize-form',
+  'resize-picture',
   'filter-form'
-], function(Photo, Gallery, Resizer) {
+], function(Photo, Gallery) {
 
   var ReadyState = {
     'UNSENT': 0,
