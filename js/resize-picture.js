@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+define(function() {
   /**
    * @constructor
    * @param {FileBuffer}
@@ -317,7 +317,7 @@
   };
 
   /**
-   * Вспомогательный тип, описывающий координату.
+   * returnельный тип, описывающий координату.
    * @constructor
    * @param {number} x
    * @param {number} y
@@ -328,5 +328,5 @@
     this.y = y;
   };
 
-  window.Resizer = Resizer;
-})();
+  return Resizer;
+});

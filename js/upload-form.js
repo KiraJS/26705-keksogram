@@ -1,6 +1,6 @@
-/* global Resizer: true resizer: true*/
 'use strict';
-(function() {
+
+define(function() {
   var uploadForm = document.forms['upload-select-image'];
   var resizeForm = document.forms['upload-resize'];
   var filterForm = document.forms['upload-filter'];
@@ -45,4 +45,4 @@
   uploadForm.onreset = function() {
     fileElement.classList.remove('upload-input-hasvalue');
   };
-})();
+});

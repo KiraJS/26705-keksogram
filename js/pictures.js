@@ -1,7 +1,18 @@
-/* global Photo: true Gallery: true */
 'use strict';
 
-(function() {
+requirejs.config({
+  baseUrl: 'js'
+});
+
+define([
+  'photo',
+  'gallery',
+  'resize-picture',
+  'logo-background',
+  'upload-form',
+  'resize-form',
+  'filter-form'
+], function(Photo, Gallery, Resizer) {
 
   var ReadyState = {
     'UNSENT': 0,
@@ -206,4 +217,4 @@
     parseURL();
   });
 
-})();
+});

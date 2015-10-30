@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+define(function() {
 
   var Key = {
     'ESC': 27,
@@ -88,6 +88,5 @@
         break;
     }
   };
-  //Вынесли Gallery в глобальную область видимости
-  window.Gallery = Gallery;
-})();
+  return Gallery;
+});

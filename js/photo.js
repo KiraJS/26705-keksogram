@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+define(function() {
 
   var pictureTemplate = document.getElementById('picture-template');
 
@@ -60,5 +60,5 @@
   };
 
   //Вынесла переменную Photo в глобальную область видимости
-  window.Photo = Photo;
-})();
+  return Photo;
+});
