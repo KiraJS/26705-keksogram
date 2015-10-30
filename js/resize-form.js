@@ -1,3 +1,4 @@
+/* global resizer: true*/
 'use strict';
 
 define(function() {

@@ -185,7 +185,6 @@ define([
   // Поменяла тип обработки события
   function initFilters() {
     filterContainer.addEventListener('click', function(evt) {
-      var clickedFilter = evt.target;
       //Пишем хэш вместо фильтрации
       location.hash = 'filters/' + evt.target.value;
     });
@@ -193,7 +192,7 @@ define([
   // обработчик события hashchange объекта window который бы вызывал метод parseURL.
   window.addEventListener('hashchange', function() {
     parseURL();
-    });
+  });
 
   //Метод parseURL, который с помощью регулярного выражения обрабатывает хэш адресной строки и если он соответствует паттерну запускает фильтрацию
   function parseURL() {
