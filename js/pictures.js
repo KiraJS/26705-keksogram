@@ -72,17 +72,17 @@ define([
   }
 
   /**
-   * Загружает список фотографий постранично.
+   * Загружает список фотографий постранично
    * @param {Array} picturesToRender
    * @param {number} pageNumber
    * @param {boolean} replace
    */
   function renderPictures(picturesToRender, pageNumber, replace) {
-    /**
+    /*
    * Условия для того, чтобы при скроле контейнер не отрисовывался заново, а добавлялся к имеющемуся
    */
     replace = typeof replace !== 'undefined' ? replace : true;
-    /**
+    /*
     * Нормализация аргумента на случай если он не передан
     */
     pageNumber = pageNumber || 0;
@@ -105,6 +105,7 @@ define([
 
   /**
     * Загрузка изображений из 'data/pictures.json'
+    * @param {requestCallback} callback
     */
   function loadPictures(callback) {
     var xhr = new XMLHttpRequest();

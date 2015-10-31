@@ -25,17 +25,14 @@ define(function() {
     }
     previewImage.className = 'filter-image-preview' + ' ' + filterMap[selectedFilter.value];
   }
-  /**
-   * Цикл перебирает массив фильтров, добавляет нужный класс для применения css-фильтра
-   */
+
   for (var i = 0, l = selectedFilter.length; i < l; i++) {
     selectedFilter[i].onchange = function() {
       setFilter();
     };
   }
   /**
-   * Цикл перебирает массив фильтров, добавляет нужный класс для применения css-фильтра
-   * @param` {ClickEvent} evt
+   * @param` {MouseEvent} evt
    */
   prevButton.onclick = function(evt) {
     evt.preventDefault();

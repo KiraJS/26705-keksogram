@@ -7,7 +7,7 @@ define(function() {
   /**
    * Объект типа Photo
    * @constructor
-   * @param {PhotoData} data
+   * @param {Object} data
    */
   var Photo = function(data) {
     this._data = data;
@@ -56,7 +56,8 @@ define(function() {
 
   /**
    * Обработка клика по фотографии
-   * @param` {ClickEvent} evt
+   * @private
+   * @param` {MouseEvent} evt
    */
   Photo.prototype._onClick = function(evt) {
     evt.preventDefault();

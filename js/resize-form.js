@@ -149,6 +149,10 @@ define(function() {
     resizer.setConstraint(Number(resizeX.value), Number(resizeY.value), Number(resizeS.value));
   };
 
+  /**
+   * Обработка клика по кнопке
+   * @param {MouseEvent} evt
+   */
   prevButton.onclick = function(evt) {
     evt.preventDefault();
     resizeForm.reset();
@@ -157,6 +161,10 @@ define(function() {
     uploadForm.classList.remove('invisible');
   };
 
+  /**
+   * Обработка отправки формы
+   * @param {MouseEvent} evt
+   */
   resizeForm.onsubmit = function(evt) {
     evt.preventDefault();
     filterForm.elements['filter-image-src'] = previewImage.src;
