@@ -35,6 +35,7 @@ define(function() {
   }
   /**
    * Цикл перебирает массив фильтров, добавляет нужный класс для применения css-фильтра
+   * @param` {ClickEvent} evt
    */
   prevButton.onclick = function(evt) {
     evt.preventDefault();

@@ -75,7 +75,7 @@ define([
    * Загружает список фотографий постранично.
    * @param {Array} picturesToRender
    * @param {number} pageNumber
-   * @param {boolean=} replace
+   * @param {boolean} replace
    */
   function renderPictures(picturesToRender, pageNumber, replace) {
     /**
