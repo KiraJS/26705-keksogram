@@ -32,7 +32,7 @@ define(function() {
     };
   }
   /**
-   * @param` {MouseEvent} evt
+   * @param {MouseEvent} evt
    */
   prevButton.onclick = function(evt) {
     evt.preventDefault();

@@ -16,7 +16,7 @@ define(function() {
 
   /**
    * Метод отрисовки изображений через прототип
-   * @param` {Array} container
+   * @param {Array} container
    */
   Photo.prototype.render = function(container) {
     var newPictureElement = pictureTemplate.content.children[0].cloneNode(true);
@@ -57,7 +57,7 @@ define(function() {
   /**
    * Обработка клика по фотографии
    * @private
-   * @param` {MouseEvent} evt
+   * @param {MouseEvent} evt
    */
   Photo.prototype._onClick = function(evt) {
     evt.preventDefault();
@@ -67,6 +67,9 @@ define(function() {
     }
   };
 
+  /**
+   * @returns {Object} Photo
+   */
   Photo.prototype.getPhotos = function() {
     return this._data.pictures;
   };
