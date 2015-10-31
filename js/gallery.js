@@ -13,7 +13,7 @@ define(function() {
   }
   /**
    * Объект типа Gallery
-   * @type {Gallery}
+   * @constructor
    */
   var Gallery = function() {
     this._element = document.body.querySelector('.gallery-overlay');

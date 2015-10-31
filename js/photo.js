@@ -6,7 +6,8 @@ define(function() {
 
   /**
    * Объект типа Photo
-   * @type {Gallery}
+   * @constructor
+   * @param {PhotoData} data
    */
   var Photo = function(data) {
     this._data = data;
