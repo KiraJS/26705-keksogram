@@ -6,13 +6,12 @@ requirejs.config({
 
 define([
   'photo',
-  'gallery',
   'upload-form',
   'logo-background',
   'resize-form',
   'resize-picture',
   'filter-form'
-], function(Photo, Gallery) {
+], function(Photo) {
 
   var ReadyState = {
     'UNSENT': 0,
@@ -34,12 +33,6 @@ define([
    * @type {Еlement}
    */
   var picturesContainer = document.querySelector('.pictures');
-
-  /**
-   * Объект типа Gallery
-   * @type {Gallery}
-   */
-  var gallery = new Gallery();
 
   /**
    * @type {number}
@@ -244,16 +237,6 @@ define([
   }
 
   /**
-   * Галлерея
-   */
-  function initGallery() {
-    window.addEventListener('showgallery', function(evt) {
-      gallery.setPhotos(evt.detail.photoElement.getPhotos());
-      gallery.show();
-    });
-  }
-
-  /**
    * Фильтры
    */
   function initFilters() {
@@ -281,7 +264,6 @@ define([
 
   initScroll();
   initFilters();
-  initGallery();
 
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;
